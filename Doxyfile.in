@@ -8,7 +8,7 @@ EXTRACT_PRIVATE        = NO
 GENERATE_TREEVIEW      = YES # required!
 DISABLE_INDEX          = NO
 FULL_SIDEBAR           = NO
-HTML_EXTRA_STYLESHEET  = ./Estilo/doxygen-awesome.css 
+HTML_EXTRA_STYLESHEET  = ./estudiante/Estilo/doxygen-awesome.css 
 HTML_COLORSTYLE        = LIGHT # required with Doxygen >= 1.9.5
 
 

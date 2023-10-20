@@ -49,34 +49,5 @@ Image Image::Zoom2X(int fil, int col, int lado) const {
     Image SubImagen(this->Crop(fil, col, lado, lado));
     Image ImagenZoom(2*lado-1, 2*lado-1);
 
-    // Se interpola sobre las columnas
-    for (int i=0; i<ImagenZoom.get_rows(); i+=2) {
-        for (int j=0; j<=ImagenZoom.get_cols(); j++) {
-            if (j%2)
-                ImagenZoom.set_pixel(i, j, SubImagen.get_pixel(i,j));
-            else
-                // Comprobamos que no sea el ultimo pixel de la columna
-                if (j!=get_cols()-1)
-                    ImagenZoom.set_pixel(i, j, (SubImagen.get_pixel(i,j-1) + SubImagen.get_pixel(i,j+1))/2);
-                else
-                    ImagenZoom.set_pixel(i, j, SubImagen.get_pixel(i,j));
-            
-        }
-    }
-    // Se interpola sobre las filas
-    for (int i=0; i<ImagenZoom.get_rows(); i+=2) {
-        for (int j=0; j<=ImagenZoom.get_cols(); j++) {
-            if (j%2)
-                ImagenZoom.set_pixel(j, i, SubImagen.get_pixel(j,i));
-            else
-                // Comprobamos que no sea el ultimo pixel de la fila
-                if (j!=get_rows()-1)
-                    ImagenZoom.set_pixel(j, i, (SubImagen.get_pixel(j,i-1) + SubImagen.get_pixel(j,i+1))/2);
-                else
-                    ImagenZoom.set_pixel(j, i, SubImagen.get_pixel(j,i));
-            
-        }
-    }
-
-    return ImagenZoom;
+  
 }
