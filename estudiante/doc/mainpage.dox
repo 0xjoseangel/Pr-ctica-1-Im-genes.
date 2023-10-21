@@ -36,6 +36,54 @@ Calcula el negativo de una imagen
 @param "<FichImagenOriginal>" Imagen PGM a la que se va a calcular
 @param <FichImagenDestino> Imagen PGM resultado de calcular el negativo
 
+## Contraste:
 
+Cambia el contraste de una imagen
+
+`__contraste__ \<FichImagenOriginal\> \<FichImagenDestino\> \<e1>\ \<e2>\ \<s1>\ \<s2>\`
+@param "<FichImagenOriginal>" Imagen PGM a la que se va a cambiar el contraste
+@param <FichImagenDestino> Imagen PGM resultado de cambiar el contraste
+@param <e1> Umbral inferior de la imagen de entrada
+@param <e2> Umbral superior de la imagen de entrada
+@param <s1> Umbral inferior de la imagen de salida
+@param <s2> Umbral superior de la imagen de salida
+
+## Subimagen:
+
+Genera una subimagen a partir de otra
+
+`__submagen__ \<FichImagenOriginal\> \<FichImagenDestino\> \<fila>\ \<col>\ \<filas_sub>\ \<cols_sub>\`
+@param "<FichImagenOriginal>" Imagen PGM que se quiere recortar
+@param <FichImagenDestino> Imagen PGM ya recortada
+@param <fila> Fila inicial para recortar
+@param <col> Columna inicial para recortar 
+@param <filas_sub> Numero de filas
+@param <cols_sub> Numero de columnas
+
+## Barajar:
+
+Baraja o desbaraja una imagen PGM
+
+`__barajar__ \<FichImagenOriginal\> \<FichImagenDestino\>`
+@param "<FichImagenOriginal>" Imagen PGM a ser barajada
+@param <FichImagenDestino> Imagen PGM ya barajada
+
+## Zoom:
+
+Genera una imagen ampliada de otra
+
+`__suimagen__ \<FichImagenOriginal\> \<FichImagenDestino\> \<fila>\ \<col>\ \<lado>\`
+@param "<FichImagenOriginal>" Imagen PGM que se quiere recortar
+@param <FichImagenDestino> Imagen PGM ya recortada
+@param <fila> Fila de la subimagen que se va a ampliar
+@param <col>  Fila de la subimagen que se va a ampliar 
+@param <lado> Tamano del cuadrado
+
+@note Para compilar el proyecto se debe de generar el makefile con el comando:
+```
+cmake CMakeLists.txt
+```
+Tras esto, se habra generado el makefile para compilar todos los ejecutables de la practica
+ademas de el Doxyfile para poder generar la documentacion.
 
 */

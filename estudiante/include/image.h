@@ -262,7 +262,17 @@ public:
    */
   void AdjustContrast(byte in1, byte in2, byte out1, byte out2);
 
-  // Calcula la media de los píxeles de una imagen entera o de un fragmento de ésta.
+  /**
+   * @brief Calcula la media de los píxeles de una imagen entera o de un fragmento de ésta.
+   * 
+   * @param i Fila inicial para empezar la media
+   * @param j Columna inicial para empezar la media
+   * @param height Numero de filas
+   * @param width Numero de columnas
+   * @pre @p i < @p height \n 
+   * @pre @p j < @p width \n
+   * @return Media de los pixiles de la imagen o subimagen. 
+   */
   double Mean(int i, int j, int height, int width) const;
 
   // Genera un icono como reducción de una imagen.
@@ -293,7 +303,13 @@ public:
    */
   Image Zoom2X(int fil, int col, int lado) const;
 
-  // Baraja pseudoaleatoriamente las filas de una imagen.
+  /**
+   * @brief Baraja pseudoaleatoriamente las filas de una imagen.
+   * @pre rows < 9973
+   * @post El objeto que llama al método contiene ahora una nueva imagen igual que la anterior pero
+   * con las filas ordenadas según el siguiente algoritmo:
+   * r = (r*p) mod rows
+   */
   void ShuffleRows();
 };
 

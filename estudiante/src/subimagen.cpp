@@ -1,5 +1,5 @@
-// Fichero: contraste.cpp
-// Modifica el contraste de una imagen PGM
+// Fichero: subimagen.cpp
+// Genera una subimagen a partir de otra imagen PGM
 //
 
 #include <iostream>

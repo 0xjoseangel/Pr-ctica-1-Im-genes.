@@ -1,14 +1,17 @@
 PROJECT_NAME           = "Práctica 1. Imágenes"
 OUTPUT_DIRECTORY       = @CMAKE_CURRENT_BINARY_DIR@/doc_doxygen/
 INPUT                  = @CMAKE_SOURCE_DIR@/@BASE_FOLDER@/include @CMAKE_SOURCE_DIR@/@BASE_FOLDER@/src @CMAKE_SOURCE_DIR@/@BASE_FOLDER@/doc
-GENERATE_LATEX         = NO
+GENERATE_LATEX         = YES
+USE_PDFLATEX           = YES
 IMAGE_PATH             = @CMAKE_SOURCE_DIR@/@BASE_FOLDER@/doc
 EXTRACT_PRIVATE        = NO
+
 
 GENERATE_TREEVIEW      = YES # required!
 DISABLE_INDEX          = NO
 FULL_SIDEBAR           = NO
 HTML_EXTRA_STYLESHEET  = ./estudiante/Estilo/doxygen-awesome.css 
 HTML_COLORSTYLE        = LIGHT # required with Doxygen >= 1.9.5
+
 
 

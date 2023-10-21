@@ -1,41 +1,92 @@
-/*! \mainpage Título de la página principal
-
-@image html doxyque.png "Pie de foto"
-
-# Información sobre Doxygen
-Doxygen admite el uso de la [sintaxis de Markdown (Consulta aquí los comandos básicos)](https://www.markdownguide.org/basic-syntax).
-
-Así como el uso de  <a href="https://htmlcheatsheet.com/">sintaxis <strong>HTML</strong></a>. Esto es especialmente útil
-para aquellos aspectos que Markdown no permite modificar, como el <span  style="color:red">color</span>. Aunque es buena idea evitarlo en la medida de lo posible, por dos
-motivos:
-
-1. <span style="font-size:1.1em">Hace el código <strong>poco</strong> <span style="  background-image: linear-gradient(to left, #4285f4, #34a853, #fbbc05, #ea4335); -webkit-background-clip: text; color: transparent;"> <strong> LEGIBLE </strong> </span></span>
-2. La idea detrás de Markdown es separar _aspecto_ y _contenido_. Y es una __gran idea__.
-
-La forma más correcta de modificar el aspecto debería ser mediante un documento ``.css`` configurado en el archivo ``Doxyfile.in``.
-Si te interesa, puedes echarle un vistazo a la [documentación](https://www.doxygen.nl/manual/customize.html) o a
-temas customizados como [este](https://jothepro.github.io/doxygen-awesome-css/). Aunque el tema por defecto nos parece
-perfecto, _CLÁSICO_. Así puedes centrarte en el contenido.
-
-Por último, lo hemos visto en clase y hay suficientes ejemplos en el código fuente proporcionado, pero puedes consultar la
-mayor parte de la sintaxis de Doxygen para comentar código en su
-[documentación](https://www.doxygen.nl/manual/docblocks.html).
-
 # Introducción
-
-A RELLENAR POR EL ESTUDIANTE
+Practica realizada por Jesus Rodriguez y Jose Angel Carretero para la asignatura de Estructura de computadores del doble grado
+en igenieria informatica y administracion y direccion de empresas.
 
 # Ejecutables
 
-@image html invert.png
 ## Negativo:
 
 Calcula el negativo de una imagen
 
-`__negativo__ \<FichImagenOriginal\> \<FichImagenDestino\>`
-@param "<FichImagenOriginal>" Imagen PGM a la que se va a calcular
-@param <FichImagenDestino> Imagen PGM resultado de calcular el negativo
+```
+__negativo__ <FichImagenOriginal> <FichImagenDestino>
+```
+
+`FichImagenOriginal` Imagen PGM a la que se va a calcular
+
+`FichImagenDestino` Imagen PGM resultado de calcular el negativo
+
+## Contraste:
+
+Cambia el contraste de una imagen
+
+```
+__contraste__ <FichImagenOriginal> <FichImagenDestino> <e1> <e2> <s1> <s2>
+```
+
+`FichImagenOriginal` Imagen PGM a la que se va a cambiar el contraste
+
+`FichImagenDestino` Imagen PGM resultado de cambiar el contraste
+
+`e1` Umbral inferior de la imagen de entrada
+
+`e2` Umbral superior de la imagen de entrada
+
+`s1` Umbral inferior de la imagen de salida
+
+`s2` Umbral superior de la imagen de salida
+
+## Subimagen:
+
+Genera una subimagen a partir de otra
+
+```
+__submagen__ <FichImagenOriginal> <FichImagenDestino> <fila> <col> <filas_sub> \<cols_sub>
+```
+
+`FichImagenOriginal` Imagen PGM que se quiere recortar
+
+`FichImagenDestino` Imagen PGM ya recortada
+
+`fila` Fila inicial para recortar
+
+`col` Columna inicial para recortar 
+
+`filas_sub` Numero de filas
+
+`cols_sub` Numero de columnas
+
+## Barajar:
+
+Baraja o desbaraja una imagen PGM
+
+```
+__barajar__ <FichImagenOriginal> <FichImagenDestino>
+```
+
+`<FichImagenOriginal>` Imagen PGM a ser barajada
+
+`<FichImagenDestino>` Imagen PGM ya barajada
+
+## Zoom:
+
+Genera una imagen ampliada de otra
+
+```
+__suimagen__ <FichImagenOriginal> <FichImagenDestino> <fila> <col> <lado>
+```
+
+`<FichImagenOriginal>` Imagen PGM que se quiere recortar
+
+`FichImagenDestino` Imagen PGM ya recortada
+
+`fila` Fila de la subimagen que se va a ampliar
+
+`col`  Fila de la subimagen que se va a ampliar 
+
+`lado` Tamano del cuadrado
+
+> :notebook: Para compilar el proyecto se debe de generar el makefile con el       comando`cmake CMakeLists.txt`. Tras esto, se habra generado el makefile para compilar todos los ejecutables de la practica ademas de el Doxyfile para poder generar la documentacion.
 
 
 
-*/

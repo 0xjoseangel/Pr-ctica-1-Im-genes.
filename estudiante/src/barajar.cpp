@@ -1,5 +1,5 @@
-// Fichero: zoom.cpp
-// Genera una imagen con zoom imagen PGM
+// Fichero: barajar.cpp
+// Baraja o desbaraja una imagen PGM
 //
 
 #include <iostream>
@@ -13,30 +13,23 @@ using namespace std;
 int main(int argc, char *argv[]){
 
     char *origen, *destino; // nombres de los ficheros
-    int fil, col, lado;
-    Image image, imageZoom;
+    Image image;
 
     // Comprobar validez de la llamada
-    if (argc != 6){
+    if (argc != 3){
         cerr << "Error: Numero incorrecto de parametros.\n";
-        cerr << "Uso: subimagen <FichImagenOriginal> <FichImagenDestino> <fila> <col> <lado>>\n";
+        cerr << "Uso: subimagen <FichImagenOriginal> <FichImagenDestino> \n";
         exit(1);
     }
 
     // Obtener argumentos
     origen = argv[1];
     destino = argv[2];
-    fil = atoi(argv[3]);
-    col = atoi(argv[4]);
-    lado = atoi(argv[5]);
 
     // Mostramos argumentos
     cout << endl;
     cout << "Fichero origen: " << origen << endl;
     cout << "Fichero resultado: " << destino << endl;
-    cout << "Fila de la subimagen que se va a ampliar: " << fil << endl;
-    cout << "Columna de la subimagen que se va a ampliar: " << col << endl;
-    cout << "Tamano del lado de la subimagen: " << lado << endl;
 
     // Leer la imagen del fichero de entrada
     if (!image.Load(origen)){
@@ -50,10 +43,10 @@ int main(int argc, char *argv[]){
     cout << "Dimensiones de " << origen << ":" << endl;
     cout << "   Imagen   = " << image.get_rows() << " filas x " << image.get_cols() << " columnas " << endl;
 
-    // Generamos la imagen recortada
-    imageZoom = image.Zoom2X(fil, col, lado);
+    // Barajamos la imagen
+    image.ShuffleRows();
     // Guardar la imagen resultado en el fichero
-    if (imageZoom.Save(destino))
+    if (image.Save(destino))
         cout << "La imagen se guardo en " << destino << endl;
     else{
         cerr << "Error: No pudo guardarse la imagen." << endl;
