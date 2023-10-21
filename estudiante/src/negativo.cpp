@@ -1,7 +1,13 @@
-// Fichero: negativo.cpp
-// Calcula el negativo de una imagen PGM
-//
-
+/**
+ * @file negativo.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2023-10-21
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
