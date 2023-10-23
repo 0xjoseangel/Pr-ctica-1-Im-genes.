@@ -73,11 +73,11 @@ double Image::Mean(int i, int j, int height, int width) const {
     //assert(i>height || j>width);
     Image SubImagen = this->Crop(i, j, height, width);
 
-    int sum = 0;
+    double sum = 0;
     for (int i=0; i<SubImagen.get_rows()*SubImagen.get_cols(); i++) {
         sum += SubImagen.get_pixel(i);
     }
-    return sum/(i<SubImagen.get_rows()*SubImagen.get_cols());
+    return sum/(SubImagen.get_rows()*SubImagen.get_cols());
 }
 
 void Image::ShuffleRows() {
