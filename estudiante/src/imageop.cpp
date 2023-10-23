@@ -70,7 +70,7 @@ Image Image::Zoom2X(int fil, int col, int lado) const {
 }
 
 double Image::Mean(int i, int j, int height, int width) const {
-    assert(i>height || j>width);
+    //assert(i>height || j>width);
     Image SubImagen = this->Crop(i, j, height, width);
 
     int sum = 0;
@@ -90,4 +90,28 @@ void Image::ShuffleRows() {
             temp.set_pixel(r,c,get_pixel(newr,c));
     }
     Copy(temp);
+}
+
+Image Image::Subsample(int factor) const{
+    assert(factor>0 && factor<=this->get_cols() && factor<=this->get_rows());
+    
+    int num_cols=this->get_cols()/factor;
+    int num_filas=this->get_rows()/factor;
+    Image icono(num_filas, num_cols);
+    
+    for (int i=0; i<num_filas; i++){
+        for (int j=0; j<num_cols; j++){
+            /*
+            double suma=0;
+            for (int k=0; k<factor; k++){
+                for (int l=0; l<factor; l++){
+                    suma+=this->get_pixel(i*factor+k, j*factor+l);
+                }
+            }
+            */
+            byte media=round(this->Mean(i*factor, j*factor, factor, factor));
+            icono.set_pixel(i, j, media);
+        }
+    }
+    return icono;
 }

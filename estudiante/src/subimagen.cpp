@@ -1,19 +1,7 @@
-<<<<<<< HEAD
 // Fichero: subimagen.cpp
 // Genera una subimagen a partir de otra imagen PGM
 //
-=======
-/**
- * @file subimagen.cpp
- * @author your name (you@domain.com)
- * @brief 
- * @version 0.1
- * @date 2023-10-21
- * 
- * @copyright Copyright (c) 2023
- * 
- */
->>>>>>> 00296549a1029fbdb687a98a6465320a5e44c82a
+
 
 #include <iostream>
 #include <cstring>

@@ -1,8 +1,3 @@
-
-// Fichero: zoom.cpp
-// Genera una imagen con zoom imagen PGM
-//
-
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
@@ -14,30 +9,21 @@ using namespace std;
 int main(int argc, char *argv[]){
 
     char *origen, *destino; // nombres de los ficheros
-    int fil, col, lado;
-    Image image, imageZoom;
+    int factor;
+    Image image, icono;
 
     // Comprobar validez de la llamada
-    if (argc != 6){
+    if (argc != 4){
         cerr << "Error: Numero incorrecto de parametros.\n";
-        cerr << "Uso: subimagen <FichImagenOriginal> <FichImagenDestino> <fila> <col> <lado>>\n";
-        exit(1);
+        cerr << "Uso: icono <FichImagenOriginal> <FichImagenDestino> <Factor de Reducción>\n";
+        cerr << "Siendo el factor menor que el ancho y el alto que el tamaño de la imagen original \n";
+        cerr << "y mayor que 0. \n";
     }
 
     // Obtener argumentos
     origen = argv[1];
     destino = argv[2];
-    fil = atoi(argv[3]);
-    col = atoi(argv[4]);
-    lado = atoi(argv[5]);
-
-    // Mostramos argumentos
-    cout << endl;
-    cout << "Fichero origen: " << origen << endl;
-    cout << "Fichero resultado: " << destino << endl;
-    cout << "Fila de la subimagen que se va a ampliar: " << fil << endl;
-    cout << "Columna de la subimagen que se va a ampliar: " << col << endl;
-    cout << "Tamano del lado de la subimagen: " << lado << endl;
+    factor = atoi(argv[3]);
 
     // Leer la imagen del fichero de entrada
     if (!image.Load(origen)){
@@ -46,15 +32,23 @@ int main(int argc, char *argv[]){
         return 1;
     }
 
+    // Mostramos argumentos
+    cout << endl;
+    cout << "Fichero origen: " << origen << endl;
+    cout << "Fichero resultado: " << destino << endl;
+    cout << "Factor de reducción de la imagen original con respecto al icono: ";
+    cout << factor << endl;
+
     // Mostrar los parametros de la Imagen
     cout << endl;
     cout << "Dimensiones de " << origen << ":" << endl;
     cout << "   Imagen   = " << image.get_rows() << " filas x " << image.get_cols() << " columnas " << endl;
 
-    // Generamos la imagen recortada
-    imageZoom = image.Zoom2X(fil, col, lado);
+    // Generamos el icono
+    icono = image.Subsample(factor);
+    
     // Guardar la imagen resultado en el fichero
-    if (imageZoom.Save(destino))
+    if (icono.Save(destino))
         cout << "La imagen se guardo en " << destino << endl;
     else{
         cerr << "Error: No pudo guardarse la imagen." << endl;
