@@ -15,3 +15,8 @@ CMakeFiles
 test
 .vscode
 doc_doxygen
+src/Eficiencia/dataset
+src/Eficiencia/dataset_barajado
+src/Eficiencia/datos_ordenados.txt
+src/Eficiencia/fit.log
+src/Eficiencia/Graficas

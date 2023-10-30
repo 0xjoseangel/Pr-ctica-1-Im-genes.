@@ -269,8 +269,7 @@ public:
    * @param j Columna inicial para empezar la media
    * @param height Numero de filas
    * @param width Numero de columnas
-   * @pre @p i < @p height \n 
-   * @pre @p j < @p width \n
+   * @pre assert((nrow + height) < this->get_rows() && (ncol + width) < this->get_cols())
    * @return Media de los pixiles de la imagen o subimagen. 
    */
   double Mean(int i, int j, int height, int width) const;
@@ -299,6 +298,7 @@ public:
    * @param col Columna de la subimagen que se va a ampliar
    * @param lado Tamano del cuadrado
    * @return Imagen ampliada.
+   * @pre (nrow + height) < this->get_rows() && (ncol + width) < this->get_cols()
    * @post El objeto que llama a la funcion no se modifica. 
    */
   Image Zoom2X(int fil, int col, int lado) const;

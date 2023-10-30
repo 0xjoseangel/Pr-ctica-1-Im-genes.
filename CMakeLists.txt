@@ -38,6 +38,11 @@ add_executable(barajar ${BASE_FOLDER}/src/barajar.cpp)
 target_link_libraries(barajar LINK_PUBLIC image)
 endif()
 
+if (EXISTS ${CMAKE_SOURCE_DIR}/${BASE_FOLDER}/Eficiencia/prueba.cpp)
+add_executable(prueba ${BASE_FOLDER}/Eficiencia/prueba.cpp)
+target_link_libraries(prueba LINK_PUBLIC image)
+endif()
+
 # check if Doxygen is installed
 find_package(Doxygen)
 if (DOXYGEN_FOUND)

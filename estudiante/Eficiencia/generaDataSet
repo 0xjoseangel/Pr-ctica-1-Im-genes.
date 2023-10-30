@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Directorio de salida para las imágenes
+output_dir="$1"
+mkdir -p $output_dir
+
+# Número de imágenes a generar
+num_images=1000
+
+echo "Generando dataset..."
+for ((i=1; i<=$num_images; i++)); do
+    # Generar dimensiones aleatorias para la imagen
+    rows=$((RANDOM % 1000 + 1))
+    cols=$((RANDOM % 1000 + 1))
+
+    # Nombre de archivo único basado en el índice
+    filename="$output_dir/image_$i.pgm"
+
+    # Generar contenido aleatorio y guardar la imagen PGM
+    convert -size ${cols}x${rows} xc:gray +noise random $filename
+done
+
+echo "Dataset generado en el directorio: $output_dir"
