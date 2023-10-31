@@ -28,6 +28,7 @@ A RELLENAR POR EL ESTUDIANTE
 # Ejecutables
 
 @image html invert.png
+@image latex invert.png
 ## Negativo:
 
 Calcula el negativo de una imagen
@@ -36,6 +37,8 @@ Calcula el negativo de una imagen
 @param "<FichImagenOriginal>" Imagen PGM a la que se va a calcular
 @param <FichImagenDestino> Imagen PGM resultado de calcular el negativo
 
+@image html cambio_contraste.png
+@image latex cambio_contraste.png
 ## Contraste:
 
 Cambia el contraste de una imagen
@@ -48,6 +51,8 @@ Cambia el contraste de una imagen
 @param <s1> Umbral inferior de la imagen de salida
 @param <s2> Umbral superior de la imagen de salida
 
+@image html subimagen.png
+@image latex subimagen.png
 ## Subimagen:
 
 Genera una subimagen a partir de otra
@@ -68,6 +73,8 @@ Baraja o desbaraja una imagen PGM
 @param "<FichImagenOriginal>" Imagen PGM a ser barajada
 @param <FichImagenDestino> Imagen PGM ya barajada
 
+@image html zoom.png
+@image latex zoom.png
 ## Zoom:
 
 Genera una imagen ampliada de otra

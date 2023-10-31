@@ -16,10 +16,13 @@ void Image::Invert()
 }
 
 void Image::AdjustContrast(byte in1, byte in2, byte out1, byte out2) {
+    double en1=in1, en2=in2, sa1=out1, sa2=out2;
     if (!this->Empty()) {
-        double invariante = (out2 - out1) / (in2 - in1);
-        for (int i = 0; i < this->size(); i++)
-            this->set_pixel(i, round(out1 + (invariante * (this->get_pixel(i)-in1))));
+        double invariante = (sa2 - sa1) / (en2 - en1);
+        for (int i = 0; i < this->size(); i++) {
+            if (this->get_pixel(i) >= in1 && this->get_pixel(i) <= in2)
+                this->set_pixel(i, round(sa1 + (invariante * (this->get_pixel(i)-en1))));
+        }
     }
 }
 
