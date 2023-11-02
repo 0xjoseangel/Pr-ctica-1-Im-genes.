@@ -129,6 +129,13 @@ int Image::get_cols() const {
 int Image::size() const{
     return get_rows()*get_cols();
 }
+// Métodos básicos de edición de imágenes
+void Image::set_pixel (int i, int j, byte value) {
+    img[i][j] = value;
+}
+byte Image::get_pixel (int i, int j) const {
+    return img[i][j];
+}
 // This doesn't work if representation changes
 void Image::set_pixel (int k, byte value) {
     // TODO this makes assumptions about the internal representation
