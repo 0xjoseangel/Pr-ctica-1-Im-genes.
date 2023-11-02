@@ -16,19 +16,16 @@ using namespace std;
 /********************************
       FUNCIONES PRIVADAS
 ********************************/
+// Cambiada para nueva implementacion
 void Image::Allocate(int nrows, int ncols, byte * buffer){
     rows = nrows;
     cols = ncols;
 
     img = new byte * [rows];
 
-    if (buffer != 0)
-        img[0] = buffer;
-    else
-        img[0] = new byte [rows * cols];
-
-    for (int i=1; i < rows; i++)
-        img[i] = img[i-1] + cols;
+    for (size_t i = 0; i < rows; ++i)
+        img[i] = new byte [cols];
+    
 }
 
 // Función auxiliar para inicializar imágenes con valores por defecto o a partir de un buffer de datos
@@ -41,11 +38,13 @@ void Image::Initialize (int nrows, int ncols, byte * buffer){
 }
 
 // Función auxiliar para copiar objetos Imagen
-
+// Cambiado para nueva implementacion
 void Image::Copy(const Image & orig){
     Initialize(orig.rows,orig.cols);
-    for (int k=0; k<rows*cols;k++)
-        set_pixel(k,orig.get_pixel(k));
+    for (int i=0; i<rows; i++) {
+        for (int j=0; j<cols; j++)
+            set_pixel(i,j,orig.get_pixel(i,j));
+    }
 }
 
 // Función auxiliar para destruir objetos Imagen
@@ -55,7 +54,8 @@ bool Image::Empty() const{
 
 void Image::Destroy(){
     if (!Empty()){
-        delete [] img[0];
+        for(int i=0;i<rows;++i)
+            delete[] img[i];
         delete [] img;
     }
 }
@@ -129,15 +129,6 @@ int Image::get_cols() const {
 int Image::size() const{
     return get_rows()*get_cols();
 }
-
-// Métodos básicos de edición de imágenes
-void Image::set_pixel (int i, int j, byte value) {
-    img[i][j] = value;
-}
-byte Image::get_pixel (int i, int j) const {
-    return img[i][j];
-}
-
 // This doesn't work if representation changes
 void Image::set_pixel (int k, byte value) {
     // TODO this makes assumptions about the internal representation
@@ -155,9 +146,11 @@ byte Image::get_pixel (int k) const {
 // Métodos para almacenar y cargar imagenes en disco
 bool Image::Save (const char * file_path) const {
     // TODO this makes assumptions about the internal representation
-    byte * p = img[0];
+    byte * p = new byte [this->size()];
+    for (int i=0; i<rows; i++){
+        for (int j=0; j<cols; j++)
+            p[i] = this->get_pixel(i,j);
+    }
     return WritePGMImage(file_path, p, rows, cols);
+    delete [] p;
 }
-
-
-
