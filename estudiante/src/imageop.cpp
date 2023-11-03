@@ -83,7 +83,7 @@ double Image::Mean(int i, int j, int height, int width) const {
 void Image::ShuffleRows() {
     const int p = 9973;
     Image temp(rows,cols);
-    int newr;
+    int newr, oldr;
     for (int r=0; r<rows; r++){
         newr = r*p % rows;
         for (int c=0; c<cols;c++)
@@ -101,14 +101,6 @@ Image Image::Subsample(int factor) const{
     
     for (int i=0; i<num_filas; i++){
         for (int j=0; j<num_cols; j++){
-            /*
-            double suma=0;
-            for (int k=0; k<factor; k++){
-                for (int l=0; l<factor; l++){
-                    suma+=this->get_pixel(i*factor+k, j*factor+l);
-                }
-            }
-            */
             byte media=round(this->Mean(i*factor, j*factor, factor, factor));
             icono.set_pixel(i, j, media);
         }
