@@ -37,7 +37,7 @@ int main(int argc, char *argv[]){
     ti = clock();
     image.ShuffleRows();
     tf = clock();
-    cout << image.size() << "\t" << tf - ti << endl;
+    cout << (tf - ti)/(double)CLOCKS_PER_SEC  << "\t" << image.size() << endl;
     // Guardar la imagen resultado en el fichero
     image.Save(destino);
 
