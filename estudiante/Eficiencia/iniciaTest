@@ -43,8 +43,8 @@ rm datos.txt
 mkdir -p Graficas
 gnuplot -persist <<EOF
 set title "Gráfico de Dispersión con Ajuste Lineal"
-set xlabel "Numero de pixeles"
-set ylabel "Tiempo"
+set xlabel "Tiempo"
+set ylabel "Numero de pixeles"
 set key off
 
 # Definir la función lineal
