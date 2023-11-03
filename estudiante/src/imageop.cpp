@@ -83,11 +83,11 @@ double Image::Mean(int i, int j, int height, int width) const {
 void Image::ShuffleRows() {
     const int p = 9973;
     Image temp(rows,cols);
-    int newr, oldr;
+    int newr;
+    byte * aux;
     for (int r=0; r<rows; r++){
         newr = r*p % rows;
-        for (int c=0; c<cols;c++)
-            temp.set_pixel(r,c,get_pixel(newr,c));
+        temp.img[r] = img[newr];
     }
     Copy(temp);
 }

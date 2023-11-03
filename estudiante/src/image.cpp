@@ -23,8 +23,16 @@ void Image::Allocate(int nrows, int ncols, byte * buffer){
 
     img = new byte * [rows];
 
-    for (size_t i = 0; i < rows; ++i)
+    for (int i = 0; i < rows; ++i)
         img[i] = new byte [cols];
+    
+    if (buffer != 0) {
+        int index=0;
+        for (int i=0; i<rows; ++i) {
+            for (int j=0; j<cols; ++j)
+                img[i][j] = buffer[index++];
+        }
+    }
     
 }
 
@@ -140,26 +148,34 @@ byte Image::get_pixel (int i, int j) const {
 void Image::set_pixel (int k, byte value) {
     // TODO this makes assumptions about the internal representation
     // TODO Can you reuse set_pixel(i,j,value)?
-    img[0][k] = value;
+    // Assuming img contains the image data in a non-contiguous format
+    int i = k / cols;   // Calculate the row index
+    int j = k % cols;   // Calculate the column index
+
+    // Update the pixel value
+    img[i][j] = value;
 }
 
 // This doesn't work if representation changes
 byte Image::get_pixel (int k) const {
     // TODO this makes assumptions about the internal representation
     // TODO Can you reuse get_pixel(i,j)?
-    return img[0][k];
+    int i = k / cols;   // Calculate the row index
+    int j = k % cols;   // Calculate the column index
+
+    return img[i][j];
 }
 
 // Métodos para almacenar y cargar imagenes en disco
 bool Image::Save (const char * file_path) const {
-    byte *buffer = new byte[rows * cols];
+    byte *buffer = new byte[size()];
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            buffer[i * cols + j] = img[i][j];
+            buffer[i * cols + j] = get_pixel(i,j);
         }
     }
-
+    
     bool result = WritePGMImage(file_path, buffer, rows, cols);
 
     delete[] buffer;
