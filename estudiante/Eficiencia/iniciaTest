@@ -42,9 +42,9 @@ rm datos.txt
 # Representamos los datos
 mkdir -p Graficas
 gnuplot -persist <<EOF
-set title "Gráfico de Dispersión con Ajuste Lineal"
-set xlabel "Tiempo"
-set ylabel "Numero de pixeles"
+set title "Memoria no contigua"
+set xlabel "Numero de pixeles"
+set ylabel "Tiempo"
 set key off
 
 # Definir la función lineal
@@ -52,7 +52,7 @@ f(x) = a * x + b
 
 # Configurar salida a un archivo PNG
 set terminal png
-set output "./Graficas/grafico_con_ajuste.png"
+set output "./Graficas/grafico_memoria_no_contigua.png"
 
 # Ajustar la función a los datos
 fit f(x) "datos_ordenados.txt" using 1:2 via a, b
