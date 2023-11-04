@@ -42,25 +42,29 @@ rm datos.txt
 # Representamos los datos
 mkdir -p Graficas
 gnuplot -persist <<EOF
-set title "Gráfico de Dispersión con Ajuste Lineal"
-set xlabel "Tiempo"
-set ylabel "Numero de pixeles"
+set title "Memoria contigua"
+set xlabel "Numero de pixeles (logarítmico)"
+set ylabel "Tiempo"
 set key off
 
 # Definir la función lineal
-f(x) = a * x + b
+f(x) = a * x**2 + b * x + c
 
 # Configurar salida a un archivo PNG
 set terminal png
 set output "./Graficas/grafico_memoria_contigua.png"
 
+# Establecer escala logarítmica en el eje x
+set logscale x
+
 # Ajustar la función a los datos
-fit f(x) "datos_ordenados.txt" using 1:2 via a, b
+fit f(x) "datos_ordenados.txt" using 1:2 via a, b, c
 
 # Graficar los puntos de datos
 plot "datos_ordenados.txt" with points pointtype 7 pointsize 1 title "", \
      f(x) lc rgb "blue" notitle
 EOF
+
 
 echo "Proceso completo."
 

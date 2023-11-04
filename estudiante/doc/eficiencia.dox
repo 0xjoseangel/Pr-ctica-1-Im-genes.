@@ -1,0 +1,310 @@
+/*! \page Eficiencia
+
+# Introducción
+
+En este aparatado vamos a realizar un estudio sobre el impacto que puede tener elegir una estructura de datos adecuada según el problema 
+al que nos estemos enfrentando.
+Para realizar las pruebas, haremos uso de la función Shufflerows documentada en la clase image. 
+
+Pondremos a prueba dos estructuras de datos distintas para crear matrices dinámicas que usamos para almacenar los pixeles de las imágenes.
+
+## Con posiciones de memoria consecutivas:
+@image html memContigua.png
+@image latex memContigua.png
+
+@code
+void Image::Allocate(int nrows, int ncols, byte * buffer){
+    rows = nrows;
+    cols = ncols;
+
+    img = new byte * [rows];
+
+    if (buffer != 0)
+        img[0] = buffer;
+    else
+        img[0] = new byte [rows * cols];
+
+    for (int i=1; i < rows; i++)
+        img[i] = img[i-1] + cols;
+}
+@endcode
+
+En la representación original, las filas de la imagen están almacenadas en bloques de memoria contiguos.
+Cuando se realiza una operación como ShuffleRows, que implica reorganizar las filas, se deben copiar grandes
+bloques de memoria para lograr el reordenamiento.
+
+Por tanto, el método ShuffleRows quedría de la siguiente manera:
+@code
+void Image::ShuffleRows() {
+    const int p = 9973;
+    Image temp(rows,cols);
+    int newr;
+    for (int r=0; r<rows; r++){
+        newr = r*p % rows;
+        for (int c=0; c<cols;c++)
+            temp.set_pixel(r,c,get_pixel(newr,c));
+    }
+    Copy(temp);
+}
+@endcode
+
+## Con posiciones de memoria no consecutivas:
+@image html MemNoContigua.png 
+@image latex MemNoContigua.png
+
+@code
+void Image::Allocate(int nrows, int ncols, byte * buffer){
+    rows = nrows;
+    cols = ncols;
+
+    img = new byte * [rows];
+
+    for (int i = 0; i < rows; ++i)
+        img[i] = new byte [cols];
+    
+    if (buffer != 0) {
+        int index=0;
+        for (int i=0; i<rows; ++i) {
+            for (int j=0; j<cols; ++j)
+                img[i][j] = buffer[index++];
+        }
+    }
+    
+}
+@endcode
+
+En la representación alternativa, no se asume que las filas estén almacenadas consecutivamente en memoria. Por lo tanto, 
+no es necesario copiar bloques grandes de memoria para reorganizar las filas. En lugar de eso, se recalcula la ubicación de
+cada fila en función de una operación matemática simple: 
+`newr=r×pmodrows`.
+
+Esta implementación nos permite permutar las filas simpemente moviendo los punteros del `**img` por lo que podemos implementar
+ShuffleRows de la siguiente manera:
+@code
+void Image::ShuffleRows() {
+    const int p = 9973;
+    Image temp(rows,cols);
+    int newr;
+    byte * aux;
+    for (int r=0; r<rows; r++){
+        newr = r*p % rows;
+        temp.img[r] = img[newr];
+    }
+    Copy(temp);
+}
+@endcode
+
+Las ventajas en términos de eficiencia de este algoritmo frente al anterior serían:
+
+### Menor Necesidad de Copiar Memoria:
+
+En la representación alternativa, el algoritmo de reordenamiento no implica la copia completa
+de bloques de memoria, lo que reduce significativamente la cantidad de operaciones de copia.
+
+### Complejidad Computacional:
+
+La complejidad computacional de ShuffleRows en la representación alternativa es O(rows), en comparación con O(rows×cols)
+en la representación original. Esto es especialmente beneficioso cuando el número de columnas cols es grande.
+
+### Uso Eficiente de la Memoria:
+
+La representación alternativa permite un uso más eficiente de la memoria al eliminar la necesidad de grandes bloques de
+memoria contiguos para las filas.
+
+### Acceso Secuencial Mejorado:
+
+Si las operaciones posteriores dependen de un acceso secuencial a las filas, la representación alternativa podría mejorar
+la eficiencia al mantener las filas más cerca unas de otras en memoria.
+
+# Metodología
+
+Para demostrar empíricamente la veracidad de las afirmaciones anteriores hemos probado los dos algoritmos con un dataset de 1000 imágenes PGM
+y medido el tiempo que tarda en ejecutar el algoritmo según el número de pixeles de la imagen.
+
+Para ello hemos implementado el siguinte programa que recibe como parámetros el una imagen de entrada y una dirección donde guardar es imágen barajada.
+Además, mide el tiempo que tarda en ejecutarse el algoritmo haciendo uso de `clock_t`:
+
+@code
+// Fichero: prueba.cpp
+// Baraja o desbaraja varias imagenes PGM
+//
+
+#include <iostream>
+#include <cstring>
+#include <cstdlib>
+
+#include <image.h>
+
+using namespace std;
+
+int main(int argc, char *argv[]){
+    clock_t ti, tf;
+    char *origen, *destino; // nombres de los ficheros
+    Image image;
+
+    // Comprobar validez de la llamada
+    if (argc != 3){
+        cerr << "Error: Numero incorrecto de parametros.\n";
+        cerr << "Uso: subimagen <FichImagenOriginal> <FichImagenDestino> \n";
+        exit(1);
+    }
+
+    // Obtener argumentos
+    origen = argv[1];
+    destino = argv[2];
+
+    // Leer la imagen del fichero de entrada
+    if (!image.Load(origen)){
+        cerr << "Error: No pudo leerse la imagen." << endl;
+        cerr << "Terminando la ejecucion del programa." << endl;
+        return 1;
+    }
+
+    // Barajamos las imagenes
+    ti = clock();
+    image.ShuffleRows();
+    tf = clock();
+    cout << image.size() << "\t" << (tf - ti)/(double)CLOCKS_PER_SEC << endl;
+    // Guardar la imagen resultado en el fichero
+    image.Save(destino);
+
+    return 0;
+}
+@endcode
+
+Para agilizar las pruebas, hemos desarrollado dos scripts en bash:
+
+### generaDataSet
+
+@code
+#!/bin/bash
+
+# Directorio de salida para las imágenes
+output_dir="$1"
+mkdir -p $output_dir
+
+# Número de imágenes a generar
+num_images=1000
+
+echo "Generando dataset..."
+for ((i=1; i<=$num_images; i++)); do
+    # Generar dimensiones aleatorias para la imagen
+    rows=$((RANDOM % 1000 + 1))
+    cols=$((RANDOM % 1000 + 1))
+
+    # Nombre de archivo único basado en el índice
+    filename="$output_dir/image_$i.pgm"
+
+    # Generar contenido aleatorio y guardar la imagen PGM
+    convert -size ${cols}x${rows} xc:gray +noise random $filename
+done
+
+echo "Dataset generado en el directorio: $output_dir"
+@endcode
+
+@note La línea convert -size ${cols}x${rows} xc:gray +noise random $filename utiliza la herramienta convert de ImageMagick
+para generar una imagen en formato PGM con dimensiones y contenido aleatorio. Aquí está la explicación de cada parte de la línea:
+convert: Es el comando principal de la herramienta ImageMagick que se utiliza para realizar conversiones y manipulaciones de imágenes.
+-size ${cols}x${rows}: Especifica el tamaño de la imagen que se va a generar. ${cols} y ${rows} son las variables que contienen el
+número de columnas y filas, respectivamente. La notación ${} se utiliza para expandir el valor de las variables en Bash.
+xc:gray: Crea una imagen con un fondo gris.
++noise random: Agrega ruido aleatorio a la imagen. En este caso, se está añadiendo ruido aleatorio.
+$filename: Es el nombre de archivo de salida para la imagen generada. Contiene el directorio de salida y un nombre único basado en el índice del bucle.
+
+
+
+Este script utiliza la herramienta convert de ImageMagick para generar imágenes PGM con contenido aleatorio. Asegúrate de tener
+ImageMagick instalado en tu sistema antes de ejecutar el script. Puedes ajustar el rango de las dimensiones (rows y cols) según
+tus necesidades. Este script generará 1000 imágenes en el directorio dataset, cada una con dimensiones aleatorias. Puedes utilizar
+estas imágenes para estudiar la eficiencia del método ShuffleRows en diferentes tamaños de imágenes.
+
+### iniciaTest
+
+@code
+#!/bin/bash
+
+# Ruta al ejecutable barajar
+PRUEBA_EXECUTABLE="../../prueba"
+
+# Directorio de imágenes de entrada
+INPUT_DIR="dataset"
+
+# Directorio de imágenes de salida
+OUTPUT_DIR="dataset_barajado"
+
+# Crear directorios si no existen
+if [ ! -d $INPUT_DIR ]; then
+    mkdir -p $INPUT_DIR
+    ./generaDataSet $INPUT_DIR
+fi
+mkdir -p $OUTPUT_DIR
+
+# Obtener la lista de imágenes de entrada
+INPUT_IMAGES=("$INPUT_DIR"/*)
+
+# Borramos todo lo que pueda haber en el el output de test anteirores
+rm $OUTPUT_DIR/*
+# Iterar sobre las imágenes de entrada
+for input_path in "${INPUT_IMAGES[@]}"; do
+    # Obtener el nombre del archivo sin la ruta
+    input_image=$(basename "$input_path")
+
+    # Construir ruta de salida
+    output_path="$OUTPUT_DIR/shuffled_$input_image"
+
+    # Ejecutar el programa barajar
+    $PRUEBA_EXECUTABLE "$input_path" "$output_path" >> datos.txt
+
+    # Imprimir mensaje
+    echo "Imagen $input_image barajada y guardada en $output_path"
+done
+# Ordeno de menor a mayor los pixeles
+sort -n -k1,1 datos.txt > datos_ordenados.txt
+rm datos.txt
+
+# Representamos los datos
+mkdir -p Graficas
+gnuplot -persist <<EOF
+set title "Memoria contigua"
+set xlabel "Numero de pixeles"
+set ylabel "Tiempo"
+set key off
+
+# Definir la función lineal
+f(x) = a * x**2 + b * x + c
+
+# Configurar salida a un archivo PNG
+set terminal png
+set output "./Graficas/grafico_memoria_contigua2.png"
+
+# Ajustar la función a los datos
+fit f(x) "datos_ordenados.txt" using 1:2 via a, b, c
+
+# Graficar los puntos de datos
+plot "datos_ordenados.txt" with points pointtype 7 pointsize 1 title "", \
+     f(x) lc rgb "blue" notitle
+EOF
+
+echo "Proceso completo."
+@endcode
+
+Este script ejecuta nuestro programa `test` mostrado anteriormente para cada una de las imagenes que hay en dataset creadas con el 
+script `generaDataSet`. En caso de que este directorio no exita, lo crea y genera del dataset igualmente. Luego guarda todas las 
+imágenes en el directorio datase_barajado. También guarda en el fichero datos_ordenados.txt los tiempos que el algoritmo ha tardado
+para cada número de píxeles.
+
+@warning En este caso se ha pueso la version del script para ajustar con una función cuadrática, esto se ha usado para la primera implementación
+de la matriz al ser su algoritmo O(rows*cols), mientras que en la otra implementación se ha ajustado con una función lineal al ser su algoritmo
+O(rows).
+
+# Conclusión
+
+Tras los análisis hemos obtenido los siguientes resultados:
+@image html grafico_memoria_contigua.png 
+@image latex grafico_memoria_contigua.png 
+
+@image html grafico_memoria_no_contigua.png 
+@image latex grafico_memoria_no_contigua.png 
+
+
+*/

@@ -1,4 +1,4 @@
-// Fichero: test.cpp
+// Fichero: prueba.cpp
 // Baraja o desbaraja varias imagenes PGM
 //
 
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]){
     ti = clock();
     image.ShuffleRows();
     tf = clock();
-    cout << (tf - ti)/(double)CLOCKS_PER_SEC  << "\t" << image.size() << endl;
+    cout << image.size() << "\t" << (tf - ti)/(double)CLOCKS_PER_SEC << endl;
     // Guardar la imagen resultado en el fichero
     image.Save(destino);
 
