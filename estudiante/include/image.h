@@ -38,20 +38,6 @@ enum LoadResult : unsigned char
 class Image
 {
 
-  /**
-       @page page_repImagen Representación del TDA Imagen
-
-       @section sec_Image_A Título A
-
-
-       Contenido de la sección A.
-
-       @section sec_Image_B Título  B
-
-       Contenido de la sección B.
-
-       Referencia a la \ref sec_Image_A
-     **/
 private:
   /**
     @brief Puntero a la imagen almacenada
