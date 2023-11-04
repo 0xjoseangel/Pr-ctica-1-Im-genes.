@@ -4,7 +4,15 @@
 
 # Introducción
 
-A RELLENAR POR EL ESTUDIANTE
+Este proyecto se centra en la implementación de un conjunto de programas diseñados para trabajar con imágenes en formato PGM.
+Creados como parte de la Práctica I para el tratamiento de imágenes, estos programas utilizan un Tipo de Dato Abstracto (TDA) llamado "Imagen".
+
+Los ejecutables resultantes de este trabajo abordan diversas operaciones, desde la generación de negativos hasta la modificación de contraste,
+recorte de subimágenes, barajado de filas y ampliación de imágenes. Además, se han desarrollado métodos específicos para el TDA Imagen, como 
+la inversión de colores, ajuste de contraste, recorte, zoom, cálculo de medias, barajado de filas y submuestreo.
+
+La documentación detallada de cada programa y método proporciona una guía completa para entender y utilizar estas herramientas de manipulación 
+de imágenes, ofreciendo a los usuarios una gama versátil de funciones para trabajar eficientemente con imágenes en el formato PGM.
 
 # Ejecutables
 
@@ -73,5 +81,9 @@ cmake CMakeLists.txt
 ```
 Tras esto, se habra generado el makefile para compilar todos los ejecutables de la practica
 ademas de el Doxyfile para poder generar la documentacion.
+
+@author José Ángel Carretero
+@author Jesús Rodriguez
+@date Octubre 2023
 
 */

@@ -306,5 +306,10 @@ Tras los análisis hemos obtenido los siguientes resultados:
 @image html grafico_memoria_no_contigua.png 
 @image latex grafico_memoria_no_contigua.png 
 
+@note Datos obtenidos con las siguientes especificaciones: Intel Core i7-10750H 2,60 GHz, 16Gb de RANDOM
+
+No se aprecia gran diferencia quizá por las relativamente altas especificaciones de la máquina pero si que se ve que la pendiente es menor
+en el algoritmo que no usa memoria contigua, por lo que quizá sea mas latente para imágenes mas grandes.
+
 
 */
