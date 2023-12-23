@@ -1,92 +1,92 @@
-# Introducción
-Practica realizada por Jesus Rodriguez y Jose Angel Carretero para la asignatura de Estructura de computadores del doble grado
-en igenieria informatica y administracion y direccion de empresas.
 
-# Ejecutables
+# Practica I: TDA Imagen
 
-## Negativo:
+![Portada](estudiante/doc/portada.png)
 
-Calcula el negativo de una imagen
+## Introducción
 
-```
-__negativo__ <FichImagenOriginal> <FichImagenDestino>
-```
+Este proyecto se centra en la implementación de un conjunto de programas diseñados para trabajar con imágenes en formato PGM. Creados como parte de la Práctica I para el tratamiento de imágenes, estos programas utilizan un Tipo de Dato Abstracto (TDA) llamado "Imagen".
 
-`FichImagenOriginal` Imagen PGM a la que se va a calcular
+Los ejecutables resultantes de este trabajo abordan diversas operaciones, desde la generación de negativos hasta la modificación de contraste, recorte de subimágenes, barajado de filas y ampliación de imágenes. Además, se han desarrollado métodos específicos para el TDA Imagen, como la inversión de colores, ajuste de contraste, recorte, zoom, cálculo de medias, barajado de filas y submuestreo.
 
-`FichImagenDestino` Imagen PGM resultado de calcular el negativo
+La documentación detallada de cada programa y método proporciona una guía completa para entender y utilizar estas herramientas de manipulación de imágenes, ofreciendo a los usuarios una gama versátil de funciones para trabajar eficientemente con imágenes en el formato PGM.
 
-## Contraste:
+## Ejecutables
 
-Cambia el contraste de una imagen
+### Negativo
 
-```
-__contraste__ <FichImagenOriginal> <FichImagenDestino> <e1> <e2> <s1> <s2>
-```
+![Negativo](estudiante/doc/invert.png)
 
-`FichImagenOriginal` Imagen PGM a la que se va a cambiar el contraste
+Calcula el negativo de una imagen:
 
-`FichImagenDestino` Imagen PGM resultado de cambiar el contraste
-
-`e1` Umbral inferior de la imagen de entrada
-
-`e2` Umbral superior de la imagen de entrada
-
-`s1` Umbral inferior de la imagen de salida
-
-`s2` Umbral superior de la imagen de salida
-
-## Subimagen:
-
-Genera una subimagen a partir de otra
-
-```
-__submagen__ <FichImagenOriginal> <FichImagenDestino> <fila> <col> <filas_sub> \<cols_sub>
+```bash
+negativo <FichImagenOriginal> <FichImagenDestino>
 ```
 
-`FichImagenOriginal` Imagen PGM que se quiere recortar
+- `<FichImagenOriginal>`: Imagen PGM a la que se va a calcular el negativo
+- `<FichImagenDestino>`: Imagen PGM resultado de calcular el negativo
 
-`FichImagenDestino` Imagen PGM ya recortada
+### Cambio de Contraste
 
-`fila` Fila inicial para recortar
+![Cambio de Contraste](estudiante/doc/cambio_contraste.png)
 
-`col` Columna inicial para recortar 
+Cambia el contraste de una imagen:
 
-`filas_sub` Numero de filas
-
-`cols_sub` Numero de columnas
-
-## Barajar:
-
-Baraja o desbaraja una imagen PGM
-
-```
-__barajar__ <FichImagenOriginal> <FichImagenDestino>
+```bash
+contraste <FichImagenOriginal> <FichImagenDestino> <e1> <e2> <s1> <s2>
 ```
 
-`<FichImagenOriginal>` Imagen PGM a ser barajada
+- `<FichImagenOriginal>`: Imagen PGM a la que se va a cambiar el contraste
+- `<FichImagenDestino>`: Imagen PGM resultado de cambiar el contraste
+- `<e1> <e2>`: Umbral inferior y superior de la imagen de entrada
+- `<s1> <s2>`: Umbral inferior y superior de la imagen de salida
 
-`<FichImagenDestino>` Imagen PGM ya barajada
+### Subimagen
 
-## Zoom:
+![Subimagen](estudiante/doc/subimagen.png)
 
-Genera una imagen ampliada de otra
+Genera una subimagen a partir de otra:
 
+```bash
+subimagen <FichImagenOriginal> <FichImagenDestino> <fila> <col> <filas_sub> <cols_sub>
 ```
-__suimagen__ <FichImagenOriginal> <FichImagenDestino> <fila> <col> <lado>
+
+- `<FichImagenOriginal>`: Imagen PGM que se quiere recortar
+- `<FichImagenDestino>`: Imagen PGM ya recortada
+- `<fila> <col>`: Fila y columna iniciales para recortar
+- `<filas_sub> <cols_sub>`: Número de filas y columnas
+
+### Barajar
+
+Baraja o desbaraja una imagen PGM:
+
+```bash
+barajar <FichImagenOriginal> <FichImagenDestino>
 ```
 
-`<FichImagenOriginal>` Imagen PGM que se quiere recortar
+- `<FichImagenOriginal>`: Imagen PGM a ser barajada
+- `<FichImagenDestino>`: Imagen PGM ya barajada
 
-`FichImagenDestino` Imagen PGM ya recortada
+### Zoom
 
-`fila` Fila de la subimagen que se va a ampliar
+![Zoom](estudiante/doc/zoom.png)
 
-`col`  Fila de la subimagen que se va a ampliar 
+Genera una imagen ampliada de otra:
 
-`lado` Tamano del cuadrado
+```bash
+zoom <FichImagenOriginal> <FichImagenDestino> <fila> <col> <lado>
+```
 
-> :notebook: Para compilar el proyecto se debe de generar el makefile con el       comando`cmake CMakeLists.txt`. Tras esto, se habra generado el makefile para compilar todos los ejecutables de la practica ademas de el Doxyfile para poder generar la documentacion.
+- `<FichImagenOriginal>`: Imagen PGM que se quiere recortar
+- `<FichImagenDestino>`: Imagen PGM ya recortada
+- `<fila> <col>`: Fila y columna de la subimagen que se va a ampliar
+- `<lado>`: Tamaño del cuadrado
+> [!TIP]
+> Para compilar el proyecto, genera el makefile con el comando: `cmake CMakeLists.txt`
 
 
+Tras esto, se habrá generado el makefile para compilar todos los ejecutables de la práctica, además del Doxyfile para generar la documentación.
 
+**Autores**: José Ángel Carretero, Jesús Rodriguez  
+**Fecha**: Octubre 2023
+```
